@@ -1,66 +1,27 @@
-const imagesPerPage = 20;
-const section = document.getElementById("content-section");
+const imageFolder = "./patterns/Atamena/";
+const images = [];
 
-const input = document.createElement("input");
-input.type = "file";
-input.multiple = true;
-input.webkitdirectory = true;
-input.style.display = "none";
-document.getElementById("content-section").appendChild(input);
+fetch(imageFolder)
+  .then((response) => response.text())
+  .then((html) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const links = [...doc.querySelectorAll("a")];
 
-input.addEventListener("change", function () {
-  const files = this.files;
-  const imagePaths = [];
-  for (let i = 0; i < files.length; i++) {
-    if (files[i].type.startsWith("image/")) {
-      imagePaths.push(URL.createObjectURL(files[i]));
+    links.forEach((link) => {
+      if (link.href.match(/\.(jpe?g|png|gif)$/i)) {
+        images.push(link.href);
+      }
+    });
+    console.log(images);
+    // Loop through the images
+    for (let i = 0; i < images.length; i++) {
+      // Create an HTML element for each image
+      const imgElement = document.createElement("img");
+      imgElement.src = images[i];
+      imgElement.alt = `Image ${i + 1}`;
+      // Add the image element to the page
+      document.body.appendChild(imgElement);
     }
-  }
-
-  let imageElements = imagePaths.map((imagePath) => {
-    let img = document.createElement("img");
-    img.src = imagePath;
-    img.alt = "Image";
-    return img;
-  });
-
-  for (let i = 0; i < imageElements.length; i += imagesPerPage) {
-    let pageImages = imageElements.slice(i, i + imagesPerPage);
-    let div = document.createElement("div");
-    div.classList.add("template");
-    div.innerHTML = pageImages.map((e) => e.outerHTML).join("");
-    section.appendChild(div);
-  }
-
-  // Add navigation buttons
-  const numPages = Math.ceil(imageElements.length / imagesPerPage);
-  let currentPage = 1;
-  function showPage(page) {
-    let templates = Array.from(section.getElementsByClassName("template"));
-    templates.forEach((template) => (template.style.display = "none"));
-    templates
-      .slice((page - 1) * imagesPerPage, page * imagesPerPage)
-      .forEach((template) => (template.style.display = "block"));
-    currentPage = page;
-  }
-  // Render the first page of templates on the page
-  showPage(currentPage);
-  const prevButton = document.createElement("button");
-  prevButton.innerHTML = "Prev";
-  prevButton.addEventListener("click", () => {
-    if (currentPage > 1) {
-      showPage(currentPage - 1);
-    }
-  });
-  section.appendChild(prevButton);
-  const nextButton = document.createElement("button");
-  nextButton.innerHTML = "Next";
-  nextButton.addEventListener("click", () => {
-    if (currentPage < numPages) {
-      showPage(currentPage + 1);
-    }
-  });
-  section.appendChild(nextButton);
-});
-
-input.click();
+  })
+  .catch((error) => console.error(error));
