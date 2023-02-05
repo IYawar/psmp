@@ -36,9 +36,8 @@ nav a{
     margin-top: 50px;
     grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
-    
 }
-div{
+.template{
     width: 23vw;
     margin: 20px;
     height: 300px !important;
@@ -51,8 +50,39 @@ div{
 div img{
     max-height: 250px;
     max-width: 300px;
-    /* max-width: px; */
 }
+/* .button-container{
+    grid-row-start: 24;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    
+} */
+.button-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+#buttons{
+    width: 80vw;
+    height: auto !important;
+}
+#buttons button{
+    width: 40px;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    ;
+}
+#prev, #next{
+    width: 210px !important;
+}
+/* .button-container{
+    width: auto;
+    height: auto !important;
+} */
 @media screen and (max-width: 1100px){
     #content-section{
         grid-template-columns: 1fr 1fr;
