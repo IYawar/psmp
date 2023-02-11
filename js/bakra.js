@@ -2,6 +2,10 @@ const imageFolder = "../patterns/bakra/";
 const images = [];
 const pageSize = 21; // Number of images to display per page
 
+$("#atamena").click(function () {
+  $(".open-tab").removeClass("open-tab");
+});
+
 fetch(imageFolder)
   .then((response) => response.text())
   .then((html) => {
@@ -61,30 +65,3 @@ fetch(imageFolder)
     }
   })
   .catch((error) => console.error(error));
-
-// Add buttons to navigate between pages
-//       let totalPages = Math.ceil(images.length / pageSize);
-//       let buttonContainer = document.createElement("div");
-//       buttonContainer.classList.add("button-container");
-//       if (pageNumber > 1) {
-//         let prevButton = document.createElement("button");
-//         prevButton.innerHTML = "Prev";
-//         prevButton.addEventListener("click", () => displayPage(pageNumber - 1));
-//         buttonContainer.appendChild(prevButton);
-//       }
-//       if (pageNumber < totalPages) {
-//         let nextButton = document.createElement("button");
-//         nextButton.innerHTML = "Next";
-//         nextButton.addEventListener("click", () => displayPage(pageNumber + 1));
-//         buttonContainer.appendChild(nextButton);
-//       }
-//       document.querySelector("#buttons").innerHTML = " ";
-//       document.querySelector("#buttons").appendChild(buttonContainer);
-
-//       let pageInfo = document.createElement("div");
-//       pageInfo.classList.add("page-info");
-//       pageInfo.innerHTML = `Page ${pageNumber} of ${totalPages}`;
-//       document.querySelector("#buttons").appendChild(pageInfo);
-//     }
-//   })
-//   .catch((error) => console.error(error));

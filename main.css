@@ -32,6 +32,9 @@ nav a{
     font-size: 1.5em;
     color: black;
 }
+.open-tab{
+    color: red;
+}
 #content-section{
     margin-top: 50px;
     grid-template-columns: 1fr 1fr 1fr;

@@ -2,6 +2,19 @@ const imageFolder = "../patterns/Atamena/";
 const images = [];
 const pageSize = 21; // Number of images to display per page
 
+$("#atamena").click(function () {
+  $(".open-tab").removeClass("open-tab");
+  $("#atamena").addClass("open-tab");
+});
+$("#bakra").click(function () {
+  $(".open-tab").removeClass("open-tab");
+  $("#bakra").addClass("open-tab");
+});
+$("#sim").click(function () {
+  $(".open-tab").removeClass("open-tab");
+  $("#sim").addClass("open-tab");
+});
+
 fetch(imageFolder)
   .then((response) => response.text())
   .then((html) => {
