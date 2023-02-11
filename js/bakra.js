@@ -35,6 +35,7 @@ fetch(imageFolder)
         <img src="${pageImages[i]}" alt="${alt}" loading="lazy"/>
         <p>this is a text sample</p>
       </div>`;
+        console.log(pageImages[i]);
         document.querySelector("#content-section").innerHTML += template;
       }
       let totalPages = Math.ceil(images.length / pageSize);
