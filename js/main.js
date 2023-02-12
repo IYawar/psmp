@@ -1,5 +1,4 @@
 const naxshFolder = "../patterns/Naxsh/";
-const images = [];
 const pageSize = 21;
 
 $("#atamena").click(function () {
@@ -32,6 +31,7 @@ function render() {
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, "text/html");
       const links = [...doc.querySelectorAll("a")];
+      let images = [];
 
       links.forEach((link) => {
         if (link.href.match(/\.(jpe?g|png|gif)$/i)) {
@@ -69,7 +69,7 @@ function render() {
           prevButton.addEventListener("click", () =>
             displayPage(pageNumber - 1)
           );
-          buttonContainer.appendChild(prevButton);
+          $("#prev-butt").appendChild(prevButton);
         }
         for (let i = 1; i <= totalPages; i++) {
           let pageButton = document.createElement("button");
@@ -84,10 +84,10 @@ function render() {
           nextButton.addEventListener("click", () =>
             displayPage(pageNumber + 1)
           );
-          buttonContainer.appendChild(nextButton);
+          $("#next-butt").append(nextButton);
         }
-        document.querySelector("#buttons").innerHTML = "";
-        document.querySelector("#buttons").appendChild(buttonContainer);
+        $("#buttons").html("");
+        document.getElementById("#pages").appendChild(buttonContainer);
       }
     })
     .catch((error) => console.error(error));
