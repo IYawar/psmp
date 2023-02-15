@@ -60,6 +60,9 @@ function render() {
           document.querySelector("#content-section").innerHTML += template;
         }
         let totalPages = Math.ceil(images.length / pageSize);
+        document.getElementById("pages").innerHTML = "";
+        document.getElementById("prev-butt").innerHTML = "";
+        document.getElementById("next-butt").innerHTML = "";
         let buttonContainer = document.createElement("div");
         buttonContainer.classList.add("button-container");
         if (pageNumber > 1) {
@@ -69,7 +72,7 @@ function render() {
           prevButton.addEventListener("click", () =>
             displayPage(pageNumber - 1)
           );
-          $("#prev-butt").appendChild(prevButton);
+          document.getElementById("prev-butt").appendChild(prevButton);
         }
         for (let i = 1; i <= totalPages; i++) {
           let pageButton = document.createElement("button");
@@ -84,10 +87,10 @@ function render() {
           nextButton.addEventListener("click", () =>
             displayPage(pageNumber + 1)
           );
-          $("#next-butt").append(nextButton);
+          document.getElementById("next-butt").appendChild(nextButton);
         }
-        $("#buttons").html("");
-        document.getElementById("#pages").appendChild(buttonContainer);
+
+        document.getElementById("pages").appendChild(buttonContainer);
       }
     })
     .catch((error) => console.error(error));
