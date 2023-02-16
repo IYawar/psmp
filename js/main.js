@@ -42,7 +42,6 @@ function render() {
       let pageNumber = 1;
       displayPage(pageNumber);
 
-      // Function to display a page of images
       function displayPage(pageNumber) {
         let startIndex = (pageNumber - 1) * pageSize;
         let endIndex = startIndex + pageSize;
@@ -55,7 +54,9 @@ function render() {
           let naxsh = `../patterns/Naxsh/${o}.dst`;
           let template = `<div class="template">
         <img src="${pageImages[i]}" alt="${alt}" loading="lazy"/>
-        <a href="${naxsh}" download="${o}.dst"><p>Naxsh ${o}</p></a>
+        <button class="download" onclick="location.href='${naxsh}'" download="${o}.dst">
+  <p>Pattern ${o}</p>
+</button>
         </div>`;
           document.querySelector("#content-section").innerHTML += template;
         }
@@ -79,7 +80,13 @@ function render() {
           pageButton.innerHTML = i;
           pageButton.addEventListener("click", () => displayPage(i));
           buttonContainer.appendChild(pageButton);
+          if (pageNumber == pageButton.innerHTML) {
+            $(".current").removeClass("current");
+            pageButton.classList.add("current");
+          }
+          console.log(pageNumber);
         }
+
         if (pageNumber < totalPages) {
           let nextButton = document.createElement("button");
           nextButton.id = "next";
@@ -87,6 +94,7 @@ function render() {
           nextButton.addEventListener("click", () =>
             displayPage(pageNumber + 1)
           );
+
           document.getElementById("next-butt").appendChild(nextButton);
         }
 

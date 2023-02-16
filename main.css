@@ -3,7 +3,7 @@
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 body{
-    background-color: #d5d4d4;
+    background-color: #6096B4;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,7 +14,8 @@ section{
     align-items: center;
     width: 80vw;
     min-width: 250px;
-    border: 2px solid red;
+
+    background-color: #93BFCF;
 }
 nav {
     display: grid;
@@ -47,24 +48,31 @@ nav a{
     align-items: center;
     display: flex;
     flex-direction: column;
-    border: 2px dotted orange;
+    border-radius: 1vw;
+    /* border: 2px dotted orange; */
     justify-content: flex-end;
+    background-color: #d5dde2;
 }
 div img{
     max-height: 250px;
     max-width: 300px;
+    padding-top: 10px;
 }
-/* .button-container{
-    grid-row-start: 24;
-    align-items: center;
-    display: flex;
-    flex-wrap: wrap;
-    
-} */
-
+.download{
+    cursor: pointer;
+    height: 30px;
+    width: 160px;
+    margin-top: 10px;
+    border-radius: 0.5vw;
+    margin-bottom: 10px;
+}
+.download p {
+    margin-top: 0;
+    font-size: 1rem;
+}
 .button-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: auto;
     justify-content: space-around;
     align-items: center;
     grid-gap: 7px;
@@ -81,16 +89,34 @@ div img{
     gap: 2px;
   }
   
+  #buttons button, .download{
+    background-color: white;
+    color: black;
+    transition: ease-in-out 0.2s;
+  }
+  #buttons button:hover, .download:hover{
+    background-color: black;
+    color: white;
+    transform: scale(1.15);
+  }
+  
+  .current{
+    background-color: black !important;
+    color: white !important;
+}
   #prev-butt{
     grid-column-start: 1 !important;
+    padding-left: 13px;
   }
 
   #pages{
     grid-column-start: 2 !important;
   }
 
+
   #next-butt{
     grid-column-start: 3 !important;
+    padding-left: 8px;
   }
   #buttons button {
     grid-column: auto / span 1;
@@ -98,7 +124,6 @@ div img{
     width: 40px;
     border-radius: 0.5vw;
     cursor: pointer;
-    
   }
   
   #prev, #next {
@@ -158,6 +183,7 @@ div img{
         justify-content: end;
         grid-column-start: 2 !important;
         grid-row-start: 2 !important;
+        padding-left: 0 !important;
     }
     .alone{
         justify-content: center !important;
