@@ -1,30 +1,28 @@
 const naxshFolder = "../patterns/Naxsh/";
 const pageSize = 21;
 
-$("#atamena").click(function () {
+$("#ata").click(function () {
   $(".open-tab").removeClass("open-tab");
-  $("#atamena").addClass("open-tab");
+  $("#ata").addClass("open-tab");
   $("#content-section").html("");
   render();
 });
-$("#bakra").click(function () {
+$("#bak").click(function () {
   $(".open-tab").removeClass("open-tab");
-  $("#bakra").addClass("open-tab");
+  $("#bak").addClass("open-tab");
   $("#content-section").html("");
   render();
 });
-$("#sim").click(function () {
+$("#swm").click(function () {
   $(".open-tab").removeClass("open-tab");
-  $("#sim").addClass("open-tab");
+  $("#swm").addClass("open-tab");
   $("#content-section").html("");
   render();
 });
-
 function render() {
-  if ($("#atamena").hasClass("open-tab")) imageFolder = "../patterns/Atamena/";
-  if ($("#sim").hasClass("open-tab")) imageFolder = "../patterns/sim w mrw/";
-  if ($("#bakra").hasClass("open-tab")) imageFolder = "../patterns/bakra/";
-  console.log(imageFolder);
+  if ($("#ata").hasClass("open-tab")) imageFolder = "../patterns/Atamena/";
+  if ($("#swm").hasClass("open-tab")) imageFolder = "../patterns/sim w mrw/";
+  if ($("#bak").hasClass("open-tab")) imageFolder = "../patterns/bakra/";
   fetch(imageFolder)
     .then((response) => response.text())
     .then((html) => {
@@ -55,8 +53,8 @@ function render() {
           let template = `<div class="template">
         <img src="${pageImages[i]}" alt="${alt}" loading="lazy"/>
         <button class="download" onclick="location.href='${naxsh}'" download="${o}.dst">
-  <p>Pattern ${o}</p>
-</button>
+        <p>Pattern ${o} <i class="fa-solid fa-download"></i></p>
+        </button>
         </div>`;
           document.querySelector("#content-section").innerHTML += template;
         }
@@ -78,13 +76,13 @@ function render() {
         for (let i = 1; i <= totalPages; i++) {
           let pageButton = document.createElement("button");
           pageButton.innerHTML = i;
+          pageButton.href = "#logo";
           pageButton.addEventListener("click", () => displayPage(i));
           buttonContainer.appendChild(pageButton);
           if (pageNumber == pageButton.innerHTML) {
             $(".current").removeClass("current");
             pageButton.classList.add("current");
           }
-          console.log(pageNumber);
         }
 
         if (pageNumber < totalPages) {
