@@ -1,3 +1,4 @@
+const { UserAgentApplication } = require("msal");
 const naxshFolder = "../patterns/Naxsh/";
 const pageSize = 21;
 
@@ -102,3 +103,40 @@ function render() {
     .catch((error) => console.error(error));
 }
 render();
+
+const msalConfig = {
+  auth: {
+    clientId: "c0d8fc44-9ca7-4662-b60d-691b2208cc85",
+    authority: "https://login.microsoftonline.com/common",
+  },
+  cache: {
+    cacheLocation: "localStorage",
+  },
+};
+
+const msalInstance = new UserAgentApplication(msalConfig);
+
+const graphScopes = ["Files.ReadWrite"];
+
+msalInstance
+  .loginPopup({ scopes: graphScopes })
+  .then((loginResponse) => {
+    console.log("Access token acquired:", loginResponse.accessToken);
+    // Use the access token to make requests to the OneDrive API
+  })
+  .catch((error) => {
+    console.error("Error during login:", error);
+  });
+
+fetch("https://graph.microsoft.com/v1.0/me/drive/root/children", {
+  headers: {
+    Authorization: `Bearer ${accessToken}`,
+  },
+})
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((error) => {
+    console.error("Error fetching OneDrive data:", error);
+  });
