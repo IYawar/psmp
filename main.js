@@ -1,5 +1,5 @@
 const { UserAgentApplication } = require("msal");
-const naxshFolder = "../patterns/Naxsh/";
+const naxshFolder = "./patterns/Naxsh/";
 const pageSize = 21;
 
 $("#ata").click(function () {
@@ -21,9 +21,9 @@ $("#swm").click(function () {
   render();
 });
 function render() {
-  if ($("#ata").hasClass("open-tab")) imageFolder = "../patterns/Atamena/";
-  if ($("#swm").hasClass("open-tab")) imageFolder = "../patterns/sim w mrw/";
-  if ($("#bak").hasClass("open-tab")) imageFolder = "../patterns/bakra/";
+  if ($("#ata").hasClass("open-tab")) imageFolder = "./patterns/Atamena/";
+  if ($("#swm").hasClass("open-tab")) imageFolder = "./patterns/sim w mrw/";
+  if ($("#bak").hasClass("open-tab")) imageFolder = "./patterns/bakra/";
   fetch(imageFolder)
     .then((response) => response.text())
     .then((html) => {
