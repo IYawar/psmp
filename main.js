@@ -1,5 +1,20 @@
-const { UserAgentApplication } = require("msal");
-const naxshFolder = "./patterns/Naxsh/";
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// Initialize Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyADX47tSOzGV-Xg3IzWdm1xMtDA3yOgbuQ",
+  authDomain: "psmp-802f0.firebaseapp.com",
+  projectId: "psmp-802f0",
+  storageBucket: "psmp-802f0.appspot.com",
+  messagingSenderId: "257212390718",
+  appId: "1:257212390718:web:7c99c08629b680c3ee606f",
+  measurementId: "G-MQELDS8XVP",
+};
+firebase.initializeApp(firebaseConfig);
+
+// create a reference to the Firebase Storage bucket
+const storageRef = firebase.storage().ref();
+const naxshFolder = "patterns/Naxsh/";
 const pageSize = 21;
 
 $("#ata").click(function () {
@@ -20,21 +35,25 @@ $("#swm").click(function () {
   $("#content-section").html("");
   render();
 });
+
 function render() {
-  if ($("#ata").hasClass("open-tab")) imageFolder = "./patterns/Atamena/";
-  if ($("#swm").hasClass("open-tab")) imageFolder = "./patterns/sim w mrw/";
-  if ($("#bak").hasClass("open-tab")) imageFolder = "./patterns/bakra/";
-  fetch(imageFolder)
-    .then((response) => response.text())
-    .then((html) => {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, "text/html");
-      const links = [...doc.querySelectorAll("a")];
+  let imageFolder;
+
+  if ($("#ata").hasClass("open-tab")) imageFolder = "Atamena";
+  if ($("#swm").hasClass("open-tab")) imageFolder = "sim w mrw";
+  if ($("#bak").hasClass("open-tab")) imageFolder = "bakara";
+
+  storageRef
+    .child(`patterns/${imageFolder}`)
+    .listAll()
+    .then((result) => {
       let images = [];
 
-      links.forEach((link) => {
-        if (link.href.match(/\.(jpe?g|png|gif)$/i)) {
-          images.push(link.href);
+      result.items.forEach((itemRef) => {
+        if (itemRef.name.match(/\.(jpe?g|png|gif)$/i)) {
+          itemRef.getDownloadURL().then((url) => {
+            images.push(url);
+          });
         }
       });
 
@@ -52,11 +71,11 @@ function render() {
           let o = pageImages[i].split("/").pop().split(".")[0];
           let naxsh = `../patterns/Naxsh/${o}.dst`;
           let template = `<div class="template">
-        <img src="${pageImages[i]}" alt="${alt}" loading="lazy"/>
-        <button class="download" onclick="location.href='${naxsh}'" download="${o}.dst">
-        <p>Pattern ${o} <i class="fa-solid fa-download"></i></p>
-        </button>
-        </div>`;
+            <img src="${pageImages[i]}" alt="${alt}" loading="lazy"/>
+            <button class="download" onclick="location.href='${naxsh}'" download="${o}.dst">
+            <p>Pattern ${o} <i class="fa-solid fa-download"></i></p>
+            </button>
+          </div>`;
           document.querySelector("#content-section").innerHTML += template;
         }
         let totalPages = Math.ceil(images.length / pageSize);
@@ -102,41 +121,3 @@ function render() {
     })
     .catch((error) => console.error(error));
 }
-render();
-
-const msalConfig = {
-  auth: {
-    clientId: "c0d8fc44-9ca7-4662-b60d-691b2208cc85",
-    authority: "https://login.microsoftonline.com/common",
-  },
-  cache: {
-    cacheLocation: "localStorage",
-  },
-};
-
-const msalInstance = new UserAgentApplication(msalConfig);
-
-const graphScopes = ["Files.ReadWrite"];
-
-msalInstance
-  .loginPopup({ scopes: graphScopes })
-  .then((loginResponse) => {
-    console.log("Access token acquired:", loginResponse.accessToken);
-    // Use the access token to make requests to the OneDrive API
-  })
-  .catch((error) => {
-    console.error("Error during login:", error);
-  });
-
-fetch("https://graph.microsoft.com/v1.0/me/drive/root/children", {
-  headers: {
-    Authorization: `Bearer ${accessToken}`,
-  },
-})
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(data);
-  })
-  .catch((error) => {
-    console.error("Error fetching OneDrive data:", error);
-  });
