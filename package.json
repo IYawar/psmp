@@ -17,6 +17,11 @@
   },
   "homepage": "https://github.com/IYawar/psmp#readme",
   "dependencies": {
-    "firebase": "^9.17.1"
+    "firebase": "^9.17.1",
+    "require": "^0.4.9"
+  },
+  "devDependencies": {
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   }
 }
