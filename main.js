@@ -20,9 +20,9 @@ $("#swm").click(function () {
   render();
 });
 function render() {
-  if ($("#ata").hasClass("open-tab")) imageFolder = "../patterns/Atamena/";
-  if ($("#swm").hasClass("open-tab")) imageFolder = "../patterns/sim w mrw/";
-  if ($("#bak").hasClass("open-tab")) imageFolder = "../patterns/bakra/";
+  if ($("#ata").hasClass("open-tab")) imageFolder = "patterns/Atamena/";
+  if ($("#swm").hasClass("open-tab")) imageFolder = "patterns/sim w mrw/";
+  if ($("#bak").hasClass("open-tab")) imageFolder = "patterns/bakra/";
   fetch(imageFolder)
     .then((response) => response.text())
     .then((html) => {
