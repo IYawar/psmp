@@ -1,5 +1,9 @@
-const naxshFolder = "../patterns/Naxsh/";
 const pageSize = 21;
+import pat from "./patterns.json" assert { type: "json" };
+// for (let img in pat.Atamena) console.log(img.valueOf(img));
+$.each(pat.Atamena, function (key, value) {
+  console.log(value);
+});
 
 $("#ata").click(function () {
   $(".open-tab").removeClass("open-tab");
@@ -20,13 +24,16 @@ $("#swm").click(function () {
   render();
 });
 function render() {
-  if ($("#ata").hasClass("open-tab")) imageFolder = "/patterns/Atamena/";
-  if ($("#swm").hasClass("open-tab")) imageFolder = "/patterns/sim w mrw/";
-  if ($("#bak").hasClass("open-tab")) imageFolder = "/patterns/bakra/";
-  fetch(imageFolder)
+  let imageFolder;
+  if ($("#ata").hasClass("open-tab")) imageFolder = pat.Atamena;
+  if ($("#swm").hasClass("open-tab")) imageFolder = pat["sim w mrw"];
+  if ($("#bak").hasClass("open-tab")) imageFolder = pat.bakra;
+  console.log(imageFolder);
+  fetch(pat)
     .then((response) => response.text())
     .then((html) => {
       const parser = new DOMParser();
+      console.log(html);
       const doc = parser.parseFromString(html, "text/html");
       const links = [...doc.querySelectorAll("a")];
       let images = [];
