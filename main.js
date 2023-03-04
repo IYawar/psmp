@@ -42,7 +42,7 @@ function render() {
     for (let i = 0; i < pageImages.length; i++) {
       let alt = `Image ${startIndex + i + 1}`;
       let o = pageImages[i].split("/").pop().split(".")[0];
-      let naxsh = `../patterns/Naxsh/${o}.dst`;
+      let naxsh = pat.Naxsh[o];
       let template = `<div class="template">
         <img src="${pageImages[i]}" alt="${alt}" loading="lazy"/>
         <button class="download" onclick="location.href='${naxsh}'" download="${o}.dst">
